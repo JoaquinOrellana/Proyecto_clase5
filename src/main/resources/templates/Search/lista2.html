@@ -1,25 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <title>Empleados con Mayor Salario</title>
-</head>
-<body>
-<div class="container">
-    <h1>Empleados con Mayor Salario en la Empresa</h1>
-    <!-- COMPLETAR -->
-    <table class="table">
-        <thead>
-        <!-- COMPLETAR -->
-        </thead>
-        <tbody>
-        <!-- COMPLETAR -->
-        </tbody>
-    </table>
-</div>
-</body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <title>Empleados con Mayor Salario</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Empleados con Mayor Salario en la Empresa</h1>
+            <div th:if="${msg != null}" th:text="${msg}" class="alert alert-danger" role="alert"></div>
+            <div class="row">
+                <form method="post" th:action="@{/Search/busqueda}">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Buscar por Salario"
+                               aria-label="bucsador-categoria" aria-describedby="cat" name="salario">
+                        <button class="btn btn-primary" type="submit">Buscar</button>
+                    </div>
+                </form>
+                <a class="btn btn-primary" th:href="@{/Search/salario}">Limpiar</a>
+                <a class="btn btn-primary" th:href="@{/Search/salario}">Regresar</a>
+
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Puesto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="e : ${listaEmpleados}">
+                        <td th:text="${e.getNombre()}"></td>
+                        <td th:text="${e.getApellido()}"></td>
+                        <td th:text="${e.getFechainicio()}"></td>
+                        <td th:text="${e.getFechafin()}"></td>
+                        <td th:text="${e.getPuesto()}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
 </html>

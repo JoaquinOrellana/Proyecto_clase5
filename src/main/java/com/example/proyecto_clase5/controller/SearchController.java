@@ -1,13 +1,26 @@
 package com.example.proyecto_clase5.controller;
 
 
+import com.example.proyecto_clase5.repository.EmployeesRepository;
+import com.example.proyecto_clase5.repository.HistoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.math.BigDecimal;
 
 @Controller
 @RequestMapping("/Search")
 public class SearchController {
 
+    @Autowired
+    EmployeesRepository employeesRepository;
+
+    @Autowired
+    HistoryRepository historyRepository;
 
     @GetMapping(value = {"","/"})
     public String indice(){
@@ -15,16 +28,29 @@ public class SearchController {
     }
 
     @GetMapping(value = {"/Salario"})
-    public String listaEmpleadosMayorSalrio (){
-
-      //COMPLETAR
+    public String listaEmpleadosMayorSalario (Model model){
+        model.addAttribute("listaEmpleados", historyRepository.obtenerEmpleadosHistoria());
         return "Search/lista2";
     }
 
     @PostMapping("/busqueda")
-    public String buscar (){
+    public String buscar (Model model,
+                          @RequestParam("salario") String salario,
+                          RedirectAttributes attr){
+        try {
+            BigDecimal salary = new BigDecimal(salario); // verifica si es un número
+            if (salario.equals("")) { // verifica que no esté vacío
+                attr.addFlashAttribute("msg", "La búsqueda debe ser un número y no debe estar vacía.");
+                return "redirect:/Search/Salario";
+            } else {
+                model.addAttribute("listaEmpleados", employeesRepository.findBySalary(salary));
+                return "Search/lista2";
+            }
+        } catch (Exception e) {
+            attr.addFlashAttribute("msg", "La búsqueda debe ser un número y no debe estar vacía.");
+            return "redirect:/Search/Salario";
+        }
 
-        //COMPLETAR
     }
 
     @GetMapping(value = "/Filtro2")
