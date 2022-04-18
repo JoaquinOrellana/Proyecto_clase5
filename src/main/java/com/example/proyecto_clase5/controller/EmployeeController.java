@@ -1,8 +1,8 @@
 package com.example.proyecto_clase5.controller;
-import com.example.laboratorio4.entity.Employees;
-import com.example.laboratorio4.repository.DepartmentsRepository;
-import com.example.laboratorio4.repository.EmployeesRepository;
-import com.example.laboratorio4.repository.JobsRepository;
+import com.example.proyecto_clase5.entity.Employees;
+import com.example.proyecto_clase5.repository.DepartmentsRepository;
+import com.example.proyecto_clase5.repository.EmployeesRepository;
+import com.example.proyecto_clase5.repository.JobsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,9 +39,13 @@ public class EmployeeController {
     }
 
     @GetMapping("/new")
-    public String nuevoEmployeeForm() {
+    public String nuevoEmployeeForm(@ModelAttribute("employee") Employees employee,Model model) {
         //COMPLETAR
+        model.addAttribute("listaEmployee", employeesRepository.findAll());
+        model.addAttribute("listaJobs", jobsRepository.findAll());
+        model.addAttribute("listaDepartments", departmentsRepository.findAll());
         return "employee/Frm";
+
     }
 
     @PostMapping("/save")
@@ -77,9 +81,23 @@ public class EmployeeController {
     }
 
     @GetMapping("/edit")
-    public String editarEmployee() {
+    public String editarEmployee(Model model, @RequestParam("id") int id,
+                                 @ModelAttribute("employee") Employees employee) {
 
         //COMPLETAR
+
+        Optional<Employees> optEmployee = employeesRepository.findById(id);
+
+        if (optEmployee.isPresent()) {
+            employee = optEmployee.get();
+            model.addAttribute("employee", employee);
+            model.addAttribute("listaJobs", jobsRepository.findAll());
+            model.addAttribute("listaEmployee", employeesRepository.findAll());
+            model.addAttribute("listaDepartments", departmentsRepository.findAll());
+            return "employee/Frm";
+        } else {
+            return "redirect:/employee/list";
+        }
     }
 
     @GetMapping("/delete")
