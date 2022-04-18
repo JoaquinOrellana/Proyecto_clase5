@@ -10,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.jws.WebParam;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,15 +59,15 @@ public class EmployeeController {
             return "employee/Frm";
         }else {
 
-            if (employees.getEmployeeid() == 0) {
+            if (employees.getId() == 0) {
                 attr.addFlashAttribute("msg", "Empleado creado exitosamente");
-                employees.setHiredate(new Date());
+                employees.setHireDate(new Date());
                 employeesRepository.save(employees);
                 return "redirect:/employee";
             } else {
 
                 try {
-                    employees.setHiredate(new SimpleDateFormat("yyyy-MM-dd").parse(fechaContrato));
+                    employees.setHireDate(new SimpleDateFormat("yyyy-MM-dd").parse(fechaContrato));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -102,8 +101,8 @@ public class EmployeeController {
 
     @GetMapping("/delete")
     public String borrarEmpleado(Model model,
-                                      @RequestParam("id") int id,
-                                      RedirectAttributes attr) {
+                                 @RequestParam("id") int id,
+                                 RedirectAttributes attr) {
 
         Optional<Employees> optEmployees = employeesRepository.findById(id);
 

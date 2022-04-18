@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.util.Date;
 
 
 @Entity
@@ -35,7 +35,7 @@ public class Employees {
     private String phoneNumber;
 
     @Column(name = "hire_date", nullable = false)
-    private Instant hireDate;
+    private Date hireDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "job_id", nullable = false)
@@ -107,11 +107,11 @@ public class Employees {
         this.job = job;
     }
 
-    public Instant getHireDate() {
+    public Date getHireDate() {
         return hireDate;
     }
 
-    public void setHireDate(Instant hireDate) {
+    public void setHireDate(Date hireDate) {
         this.hireDate = hireDate;
     }
 
