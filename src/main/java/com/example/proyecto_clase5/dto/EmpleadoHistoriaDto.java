@@ -6,6 +6,7 @@ public interface EmpleadoHistoriaDto {
     String getFechainicio();
     String getFechafin();
     String getPuesto();
+    Double getSalario();
 }
 
 

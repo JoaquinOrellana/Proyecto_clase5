@@ -9,26 +9,37 @@
         <title>Empleados con Mayor Salario</title>
     </head>
     <body>
-        <div class="container">
+        <div class="container my-3">
             <h1>Empleados con Mayor Salario en la Empresa</h1>
             <div th:if="${msg != null}" th:text="${msg}" class="alert alert-danger" role="alert"></div>
-            <div class="row">
-                <form method="post" th:action="@{/Search/busqueda}">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Buscar por Salario"
-                               aria-label="bucsador-categoria" aria-describedby="cat" name="salario">
-                        <button class="btn btn-primary" type="submit">Buscar</button>
-                    </div>
-                </form>
-                <a class="btn btn-primary" th:href="@{/Search/salario}">Limpiar</a>
-                <a class="btn btn-primary" th:href="@{/Search/salario}">Regresar</a>
+            <div class="row  justify-content-center">
+                <div class="col-10">
+                    <form method="post" th:action="@{/Search/busqueda}">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Buscar por Salario"
+                                   aria-label="bucsador-categoria" aria-describedby="cat" name="salario"
+                                   th:value="${salarioFiltro != null ? salarioFiltro : ''}">
+                            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-1">
+                    <a class="btn btn-outline-danger" th:href="@{/Search/Salario}">Limpiar</a>
+                </div>
+                <div class="col-1">
+                    <a class="btn btn-primary" th:href="@{/Search}">Regresar</a>
+                </div>
 
             </div>
+            <div class="alert alert-warning" role="alert"
+                 th:if="${#lists.isEmpty(listaEmpleados)}"
+                 th:text="'No se encontraron empleados con '+${salarioFiltro}+' de salario.'"></div>
             <table class="table">
                 <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Apellido</th>
+                        <th>Salario</th>
                         <th>Fecha de Inicio</th>
                         <th>Fecha Fin</th>
                         <th>Puesto</th>
@@ -38,6 +49,7 @@
                     <tr th:each="e : ${listaEmpleados}">
                         <td th:text="${e.getNombre()}"></td>
                         <td th:text="${e.getApellido()}"></td>
+                        <td th:text="${e.getSalario()}"></td>
                         <td th:text="${e.getFechainicio()}"></td>
                         <td th:text="${e.getFechafin()}"></td>
                         <td th:text="${e.getPuesto()}"></td>

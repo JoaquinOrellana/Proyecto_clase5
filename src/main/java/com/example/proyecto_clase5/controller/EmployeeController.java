@@ -44,7 +44,6 @@ public class EmployeeController {
         model.addAttribute("listaJobs", jobsRepository.findAll());
         model.addAttribute("listaDepartments", departmentsRepository.findAll());
         return "employee/Frm";
-
     }
 
     @PostMapping("/save")

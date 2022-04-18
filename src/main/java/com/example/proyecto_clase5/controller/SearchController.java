@@ -22,28 +22,29 @@ public class SearchController {
     @Autowired
     HistoryRepository historyRepository;
 
-    @GetMapping(value = {"","/"})
-    public String indice(){
+    @GetMapping(value = {"", "/"})
+    public String indice() {
         return "Search/indice";
     }
 
     @GetMapping(value = {"/Salario"})
-    public String listaEmpleadosMayorSalario (Model model){
+    public String listaEmpleadosMayorSalario(Model model) {
         model.addAttribute("listaEmpleados", historyRepository.obtenerEmpleadosHistoria());
         return "Search/lista2";
     }
 
     @PostMapping("/busqueda")
-    public String buscar (Model model,
-                          @RequestParam("salario") String salario,
-                          RedirectAttributes attr){
+    public String buscar(Model model,
+                         @RequestParam("salario") String salario,
+                         RedirectAttributes attr) {
         try {
-            BigDecimal salary = new BigDecimal(salario); // verifica si es un número
             if (salario.equals("")) { // verifica que no esté vacío
                 attr.addFlashAttribute("msg", "La búsqueda debe ser un número y no debe estar vacía.");
                 return "redirect:/Search/Salario";
             } else {
-                model.addAttribute("listaEmpleados", employeesRepository.findBySalary(salary));
+                BigDecimal salary = new BigDecimal(Double.parseDouble(salario)); // verifica si es un número
+                model.addAttribute("listaEmpleados", historyRepository.obtenerEmpleadosHistoriaPorSalario(salary));
+                model.addAttribute("salarioFiltro", salary);
                 return "Search/lista2";
             }
         } catch (Exception e) {
@@ -54,7 +55,7 @@ public class SearchController {
     }
 
     @GetMapping(value = "/Filtro2")
-    public String cantidadEmpleadosPorPais (){
+    public String cantidadEmpleadosPorPais() {
 
         //COMPLETAR
         return "/Search/salario";
