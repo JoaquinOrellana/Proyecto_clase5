@@ -1,6 +1,8 @@
 package com.example.proyecto_clase5.controller;
 
 
+import com.example.proyecto_clase5.entity.Departments;
+import com.example.proyecto_clase5.repository.DepartmentsRepository;
 import com.example.proyecto_clase5.repository.EmployeesRepository;
 import com.example.proyecto_clase5.repository.HistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/Search")
@@ -18,6 +21,9 @@ public class SearchController {
 
     @Autowired
     EmployeesRepository employeesRepository;
+
+    @Autowired
+    DepartmentsRepository departmentsRepository;
 
     @Autowired
     HistoryRepository historyRepository;
@@ -52,20 +58,27 @@ public class SearchController {
             return "redirect:/Search/Salario";
         }
 
+        //COMPLETAR
     }
 
     @GetMapping(value = "/Filtro2")
-    public String cantidadEmpleadosPorPais() {
+    public String cantidadEmpleadosPorPais(Model model) {
 
         //COMPLETAR
-        return "/Search/salario";
+        model.addAttribute("listaSalarioPromedioPorDepartamento", departmentsRepository.listaSalarioPromedioPorDepartamento());
+        return "Search/salario";
     }
 
     @GetMapping("/listar")
-    public String listarEmpleadoDep() {
+    public String listarEmpleadoDep(Model model, @RequestParam("id") Integer id) {
         //COMPLETAR
-        return "/Search/lista3";
-
+        Optional<Departments> optional = departmentsRepository.findById(id);
+        if (optional.isPresent()) {
+            model.addAttribute("listaEmpleadosPorDepartamento", employeesRepository.findByDepartment(optional.get()));
+        } else {
+            return "redirect:/Search";
+        }
+        return "Search/lista3";
     }
 
 

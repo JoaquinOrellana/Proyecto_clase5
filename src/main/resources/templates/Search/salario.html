@@ -11,15 +11,25 @@
 <body>
 <div class="container">
     <h1>Reporte de salario máximo por departamento</h1>
-    <a class="btn btn-primary" th:href="@{}">Regresar</a>
+<!--    <a class="btn btn-primary" th:href="@{/Search}">Regresar</a>-->
     <table class="table">
         <thead>
-        <tr>
-            <!-- COMPLETAR -->
-        </tr>
+            <tr>
+                <th>ID</th>
+                <th>Departamento</th>
+                <th>Promedio</th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
-            <!-- COMPLETAR -->
+            <tr th:each="departamento : ${listaSalarioPromedioPorDepartamento}">
+                <td th:text="${departamento.getDepartmentid()()}"></td>
+                <td th:text="${departamento.getDepartmentname()}"></td>
+                <td th:text="${departamento.getPromedio()}"></td>
+                <td><a class="btn btn-primary"
+                       th:href="@{'/Search/listar' + '?id=' + ${departamento.getDepartmentid()}}">Info</a>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
