@@ -6,7 +6,6 @@ import com.example.proyecto_clase5.repository.DepartmentsRepository;
 import com.example.proyecto_clase5.repository.EmployeesRepository;
 import com.example.proyecto_clase5.repository.HistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -57,14 +56,10 @@ public class SearchController {
             attr.addFlashAttribute("msg", "La búsqueda debe ser un número y no debe estar vacía.");
             return "redirect:/Search/Salario";
         }
-
-        //COMPLETAR
     }
 
     @GetMapping(value = "/Filtro2")
     public String cantidadEmpleadosPorPais(Model model) {
-
-        //COMPLETAR
         model.addAttribute("listaSalarioPromedioPorDepartamento", departmentsRepository.listaSalarioPromedioPorDepartamento());
         return "Search/salario";
     }
@@ -74,7 +69,7 @@ public class SearchController {
         //COMPLETAR
         Optional<Departments> optional = departmentsRepository.findById(id);
         if (optional.isPresent()) {
-            model.addAttribute("listaEmpleadosPorDepartamento", employeesRepository.findByDepartment(optional.get()));
+            model.addAttribute("listaEmpleadosPorDepartamento", employeesRepository.findByDepartmentOrderBySalaryDesc(optional.get()));
         } else {
             return "redirect:/Search";
         }

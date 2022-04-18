@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface EmployeesRepository extends JpaRepository<Employees, Integer> {
 
-    List<Employees> findByDepartment (Departments departments); //en la entidad
+    List<Employees> findByDepartmentOrderBySalaryDesc(Departments departments); //en la entidad
 }
