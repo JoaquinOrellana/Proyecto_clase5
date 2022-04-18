@@ -23,7 +23,7 @@
         </thead>
         <tbody>
             <tr th:each="departamento : ${listaSalarioPromedioPorDepartamento}">
-                <td th:text="${departamento.getDepartmentid()()}"></td>
+                <td th:text="${departamento.getDepartmentid()}"></td>
                 <td th:text="${departamento.getDepartmentname()}"></td>
                 <td th:text="${departamento.getPromedio()}"></td>
                 <td><a class="btn btn-primary"
