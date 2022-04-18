@@ -12,7 +12,7 @@
 
     <div class="row mb-4">
         <div class="col-md-6 offset-md-3">
-            <h2 th:text="${employee.employeeId == 0 ? 'Nuevo Empleado' : 'Editar Empleado'}"></h2>
+            <h2 th:text="|${employee.id == 0 ? 'Nuevo' : 'Editar'} empleado|">Editar/Nuevo empleado</h2>
             <hr/>
             <form method="post" th:action="@{'/employee/save'}" th:object="${employee}">
                 <div class="mb-3">
@@ -43,8 +43,8 @@
 
                 <div class="mb-3">
                     <label class="form-label">Cargo</label>
-                    <select class="form-select" th:field="*{jobs}">
-                        <option th:each="jobs : ${listaJobs}"
+                    <select class="form-select" >
+                        <option th:each="jobs : ${listaJobs}"w
                                 th:text="|${jobs.getJobtitle()} |"
                                 th:value="${jobs.getJobid()}"></option>
                     </select>
@@ -59,23 +59,23 @@
 
                 <div class="mb-3">
                     <label class="form-label">Jefe</label>
-                    <select class="form-select" th:field="*{manager}">
+                    <select class="form-select" >
                         <option th:each="manager : ${listaEmployee}"
                                 th:text="|${manager.getFirstName()} ${manager.getLastName()==null?'':manager.getLastName()}|"
-                                th:value="${manager.getEmployeeId()}"></option>
+                                th:value="${manager.getId()}"></option>
                     </select>
                 </div>
 
                 <div class="mb-3">
                     <label  class="form-label">Departamento</label>
-                    <select class="form-select" th:field="*{department}">
+                    <select class="form-select" >
                         <option th:each="departamento : ${listaDepartments}"
                                 th:text="|${departamento.getDepartmentname()} |"
                                 th:value="${departamento.getId()}"></option>
                     </select>
                 </div>
                 <a th:href="@{'/employee'}" class="btn btn-danger">Cancelar</a>
-                <button type="submit" class="btn btn-primary" th:text="${employee.getEmployeeId() != 0 ? 'Actualizar' : 'Guardar'}">Registrar</button>
+                <button type="submit" class="btn btn-primary" th:text="${employee.id != 0 ? 'Actualizar' : 'Guardar'}">Registrar</button>
             </form>
         </div>
     </div>

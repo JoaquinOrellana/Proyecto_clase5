@@ -1,6 +1,7 @@
 package com.example.proyecto_clase5.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -39,9 +40,9 @@ public class Employees {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "job_id", nullable = false)
-    private Jobs job;
-    @NotBlank
+    private Jobs job=new Jobs();
     @Positive
+    @Digits(integer = 8,fraction = 2)
     @Column(name = "salary", precision = 8, scale = 2)
     private BigDecimal salary;
 
@@ -54,7 +55,7 @@ public class Employees {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
-    private Departments department;
+    private Departments department=new Departments();
 
     @Column(name = "enabled")
     private Integer enabled;

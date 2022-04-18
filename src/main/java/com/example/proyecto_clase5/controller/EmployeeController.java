@@ -48,7 +48,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public String guardarEmployee(@ModelAttribute("employees") @Valid Employees employees, BindingResult bindingResult,
+    public String guardarEmployee(@ModelAttribute("employee") @Valid Employees employee, BindingResult bindingResult,
                                   RedirectAttributes attr,
                                   @RequestParam(name="fechaContrato", required=false) String fechaContrato, Model model) {
 
@@ -59,20 +59,20 @@ public class EmployeeController {
             return "employee/Frm";
         }else {
 
-            if (employees.getId() == 0) {
+            if (employee.getId() == 0) {
                 attr.addFlashAttribute("msg", "Empleado creado exitosamente");
-                employees.setHireDate(new Date());
-                employeesRepository.save(employees);
+                employee.setHireDate(new Date());
+                employeesRepository.save(employee);
                 return "redirect:/employee";
             } else {
 
                 try {
-                    employees.setHireDate(new SimpleDateFormat("yyyy-MM-dd").parse(fechaContrato));
+                    employee.setHireDate(new SimpleDateFormat("yyyy-MM-dd").parse(fechaContrato));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
-                employeesRepository.save(employees);
+                employeesRepository.save(employee);
                 attr.addFlashAttribute("msg", "Empleado actualizado exitosamente");
                 return "redirect:/employee";
             }
