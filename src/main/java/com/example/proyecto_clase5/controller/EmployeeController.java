@@ -1,4 +1,5 @@
 package com.example.proyecto_clase5.controller;
+
 import com.example.proyecto_clase5.entity.Employees;
 import com.example.proyecto_clase5.repository.DepartmentsRepository;
 import com.example.proyecto_clase5.repository.EmployeesRepository;
@@ -29,8 +30,8 @@ public class EmployeeController {
     @Autowired
     DepartmentsRepository departmentsRepository;
 
-    @GetMapping(value = {"","/"})
-    public String listaEmployee(Model model){
+    @GetMapping(value = {"", "/"})
+    public String listaEmployee(Model model) {
         model.addAttribute("listaEmployee", employeesRepository.findAll());
         model.addAttribute("listaJobs", jobsRepository.findAll());
         model.addAttribute("listaDepartments", departmentsRepository.findAll());
@@ -38,7 +39,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/new")
-    public String nuevoEmployeeForm(@ModelAttribute("employee") Employees employee,Model model) {
+    public String nuevoEmployeeForm(@ModelAttribute("employee") Employees employee, Model model) {
         //COMPLETAR
         model.addAttribute("listaEmployee", employeesRepository.findAll());
         model.addAttribute("listaJobs", jobsRepository.findAll());
@@ -49,14 +50,14 @@ public class EmployeeController {
     @PostMapping("/save")
     public String guardarEmployee(@ModelAttribute("employee") @Valid Employees employee, BindingResult bindingResult,
                                   RedirectAttributes attr,
-                                  @RequestParam(name="fechaContrato", required=false) String fechaContrato, Model model) {
+                                  @RequestParam(name = "fechaContrato", required = false) String fechaContrato, Model model) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("listaJobs", jobsRepository.findAll());
-            model.addAttribute("listaJefes", employeesRepository.findAll());
+            model.addAttribute("listaEmployee", employeesRepository.findAll());
             model.addAttribute("listaDepartments", departmentsRepository.findAll());
             return "employee/Frm";
-        }else {
+        } else {
 
             if (employee.getId() == 0) {
                 attr.addFlashAttribute("msg", "Empleado creado exitosamente");
@@ -107,7 +108,7 @@ public class EmployeeController {
 
         if (optEmployees.isPresent()) {
             employeesRepository.deleteById(id);
-            attr.addFlashAttribute("msg","Empleado borrado exitosamente");
+            attr.addFlashAttribute("msg", "Empleado borrado exitosamente");
         }
         return "redirect:/employee";
 

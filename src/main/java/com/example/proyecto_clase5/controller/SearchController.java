@@ -47,7 +47,7 @@ public class SearchController {
                 attr.addFlashAttribute("msg", "La búsqueda debe ser un número y no debe estar vacía.");
                 return "redirect:/Search/Salario";
             } else {
-                BigDecimal salary = new BigDecimal(Double.parseDouble(salario)); // verifica si es un número
+                BigDecimal salary = new BigDecimal(salario); // verifica si es un número
                 model.addAttribute("listaEmpleados", historyRepository.obtenerEmpleadosHistoriaPorSalario(salary));
                 model.addAttribute("salarioFiltro", salary);
                 return "Search/lista2";
