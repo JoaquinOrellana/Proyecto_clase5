@@ -119,6 +119,10 @@ public class EmployeeController {
                 attr.addFlashAttribute("msg", "La búsqueda no debe estar vacía.");
                 return "redirect:/employee";
             } else {
+                model.addAttribute("parametro", parametro);
+                model.addAttribute("buscador", buscador);
+                parametro = parametro.toLowerCase();
+
                 switch (buscador){
                     case "nombre":
                         List<Employees> listaEmpleados1 = employeesRepository.buscarPorNombre(parametro);

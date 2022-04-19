@@ -12,22 +12,23 @@
     <div class="container">
         <h1>Lista de Empleados</h1>
 
-        <a class="btn btn-primary mt-4 mb-4" th:href="@{'/employee/new'}">Nuevo Empleado</a>  <!-- COMPLETAR -->
+        <a class="btn btn-primary mt-4 mb-4" th:href="@{'/employee/new'}">Nuevo Empleado</a>
         <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
-        <!-- COMPLETAR -->
+
         <div class="row" style="display: flex;justify-content: center;margin-bottom: 20px">
             <form method="post" th:action="@{'/employee/search'}">
                 <div class="input-group">
-                    <input name="parametro" class="form-control" type="text" placeholder="Buscar" />
+                    <input name="parametro" class="form-control" type="text" placeholder="Buscar"
+                            th:value="${parametro == null ? '' : parametro}"/>
                     <select name="buscador" class="form-select">
-                        <option value="nombre" >Nombre</option>
-                        <option value="apellido">Apellido</option>
-                        <option value="cargo">Cargo</option>
-                        <option value="departamento">Departamento</option>
-                        <option value="ciudad">Ciudad</option>
+                        <option th:selected="${buscador eq 'nombre'}" value="nombre" >Nombre</option>
+                        <option th:selected="${buscador eq 'apellido'}" value="apellido">Apellido</option>
+                        <option th:selected="${buscador eq 'cargo'}" value="cargo">Cargo</option>
+                        <option th:selected="${buscador eq 'departamento'}" value="departamento">Departamento</option>
+                        <option th:selected="${buscador eq 'ciudad'}" value="ciudad">Ciudad</option>
                     </select>
-                    <button type="submit" class="btn btn-secondary">
-                        <b>BUSCAR</b>
+                    <button type="submit" class="btn btn-secondary px-2 mx-2">
+                        <b>Buscar</b>
                     </button>
 
                 </div>
@@ -35,9 +36,7 @@
             <a class="btn btn-secondary" th:href="@{'/employee/list'}">Lista Principal</a>
         </div>
 
-
-        <!-- COMPLETAR -->
-             <table class="table">  <!-- COMPLETAR -->
+             <table class="table">
                 <thead>
                 <tr>
                     <th>#</th>
