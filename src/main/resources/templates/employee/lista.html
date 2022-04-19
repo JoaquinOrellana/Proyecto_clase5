@@ -14,6 +14,20 @@
         <a class="btn btn-primary mt-4 mb-4" th:href="@{employee/new}">Nuevo Empleado</a>  <!-- COMPLETAR -->
         <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
         <!-- COMPLETAR -->
+        <form method="post" th:action="@{'/employee/search'}">
+            <div class="input-group">
+                <input name="parametro" class="form-control" type="text" placeholder="Buscar"/>
+                <select name="buscador">
+                    <option value="nombre">Nombre</option>
+                    <option value="apellido">Apellido</option>
+                    <option value="cargo">Cargo</option>
+                    <option value="departamento">Departamento</option>
+                    <option value="ciudad">Ciudad</option>
+                </select>
+                <button type="submit" class="btn btn-secondary">
+                    <b>BUSCAR</b>
+                </button>
+            </div>
         </form>
         <!-- COMPLETAR -->
              <table class="table">  <!-- COMPLETAR -->
