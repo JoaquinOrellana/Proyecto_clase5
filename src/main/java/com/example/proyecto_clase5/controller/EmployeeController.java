@@ -50,7 +50,7 @@ public class EmployeeController {
     @PostMapping("/save")
     public String guardarEmployee(@ModelAttribute("employee") @Valid Employees employee, BindingResult bindingResult,
                                   RedirectAttributes attr,
-                                  @RequestParam(name = "fechaContrato", required = false) String fechaContrato, Model model) {
+                                   Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("listaJobs", jobsRepository.findAll());
@@ -66,11 +66,7 @@ public class EmployeeController {
                 return "redirect:/employee";
             } else {
 
-                try {
-                    employee.setHireDate(new SimpleDateFormat("yyyy-MM-dd").parse(fechaContrato));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                employee.setHireDate(new Date());
 
                 employeesRepository.save(employee);
                 attr.addFlashAttribute("msg", "Empleado actualizado exitosamente");

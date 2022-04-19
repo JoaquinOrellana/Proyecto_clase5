@@ -35,7 +35,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" th:field="*{password}">
+                            <input type="password" class="form-control" th:value="${employee.password}" name="password" id="password">
                             <div class="text-danger" th:if="${#fields.hasErrors('password')}"
                                  th:errors="*{password}"></div>
                         </div>
