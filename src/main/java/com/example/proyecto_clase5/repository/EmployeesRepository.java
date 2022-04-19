@@ -21,7 +21,7 @@ public interface EmployeesRepository extends JpaRepository<Employees, Integer> {
 
     @Query(nativeQuery = true, value = "select e.* from employees e\n" +
             "inner join jobs j on (e.job_id = j.job_id)\n" +
-            "where j.job_title like %?1%")
+            "where j.job_title like ?1%")
     List<Employees> buscarPorCargo(String cargo);
 
     @Query(nativeQuery = true, value = "select e.* from employees e\n" +

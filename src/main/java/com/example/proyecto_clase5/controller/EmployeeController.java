@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -110,30 +112,49 @@ public class EmployeeController {
     }
 
     @PostMapping("/search")
-    public String buscar (Model model,@RequestParam("parametro") String parametro, @RequestParam("buscador") String buscador){
+    public String buscar (Model model,@RequestParam("parametro") String parametro, @RequestParam("buscador") String buscador,RedirectAttributes attr){
 
-        switch (buscador){
-            case "nombre":
-                List<Employees> listaEmpleados1 = employeesRepository.buscarPorNombre(parametro);
-                model.addAttribute("listaEmployee", listaEmpleados1);
-            case "apellido":
-                List<Employees> listaEmpleados2 = employeesRepository.buscarPorApellido(parametro);
-                model.addAttribute("listaEmployee", listaEmpleados2);
-            case "cargo":
-                List<Employees> listaEmpleados3 = employeesRepository.buscarPorCargo(parametro);
-                model.addAttribute("listaEmployee", listaEmpleados3);
-            case "departamento":
-                List<Employees> listaEmpleados4 = employeesRepository.buscarPorDepartamento(parametro);
-                model.addAttribute("listaEmployee", listaEmpleados4);
-            case "ciudad":
-                List<Employees> listaEmpleados5 = employeesRepository.buscarPorCiudad(parametro);
-                model.addAttribute("listaEmployee", listaEmpleados5);
-            default:
-                List<Employees> listaEmpleados6 = employeesRepository.findAll();
-                model.addAttribute("listaEmployee", listaEmpleados6);
+        try {
+            if (parametro.equals("")) { // verifica que no esté vacío
+                attr.addFlashAttribute("msg", "La búsqueda no debe estar vacía.");
+                return "redirect:/employee";
+            } else {
+                switch (buscador){
+                    case "nombre":
+                        List<Employees> listaEmpleados1 = employeesRepository.buscarPorNombre(parametro);
+                        model.addAttribute("listaEmployee", listaEmpleados1);
+                        break;
+                    case "apellido":
+                        List<Employees> listaEmpleados2 = employeesRepository.buscarPorApellido(parametro);
+                        model.addAttribute("listaEmployee", listaEmpleados2);
+                        break;
+                    case "cargo":
+                        List<Employees> listaEmpleados3 = employeesRepository.buscarPorCargo(parametro);
+                        model.addAttribute("listaEmployee", listaEmpleados3);
+                        break;
+                    case "departamento":
+                        List<Employees> listaEmpleados4 = employeesRepository.buscarPorDepartamento(parametro);
+                        model.addAttribute("listaEmployee", listaEmpleados4);
+                        break;
+                    case "ciudad":
+                        List<Employees> listaEmpleados5 = employeesRepository.buscarPorCiudad(parametro);
+                        model.addAttribute("listaEmployee", listaEmpleados5);
+                        break;
+                    default:
+                        List<Employees> listaEmpleados6 = employeesRepository.findAll();
+                        model.addAttribute("listaEmployee", listaEmpleados6);
+                        break;
+                }
+
+                return "employee/lista";
+            }
+        } catch (Exception e) {
+            attr.addFlashAttribute("msg", "La búsqueda no debe contener caracteres extraños.");
+            return "redirect:/employee";
         }
 
-        return "employee/lista";
+
+
 
     }
 
