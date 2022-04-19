@@ -16,69 +16,94 @@
                     <hr/>
                     <form method="post" th:action="@{'/employee/save'}" th:object="${employee}">
                         <input type="hidden" th:field="*{id}">
-                        <div class="mb-3">
-                            <label class="form-label">Nombre</label>
-                            <input type="text" class="form-control" th:field="*{firstName}"/>
-                            <div class="text-danger" th:if="${#fields.hasErrors('firstName')}"
-                                 th:errors="*{firstName}"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Apellido</label>
-                            <input type="text" class="form-control" th:field="*{lastName}"/>
-                            <div class="text-danger" th:if="${#fields.hasErrors('lastName')}"
-                                 th:errors="*{lastName}"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Correo</label>
-                            <input type="text" class="form-control" th:field="*{email}"/>
-                            <div class="text-danger" th:if="${#fields.hasErrors('email')}"
-                                 th:errors="*{email}"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" th:value="${employee.password}" name="password"
-                                   id="password">
-                            <div class="text-danger" th:if="${#fields.hasErrors('password')}"
-                                 th:errors="*{password}"></div>
+
+                        <div class="row justify-content-around">
+
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" th:field="*{firstName}"/>
+                                    <div class="text-danger" th:if="${#fields.hasErrors('firstName')}"
+                                         th:errors="*{firstName}"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Correo</label>
+                                    <input type="text" class="form-control" th:field="*{email}"/>
+                                    <div class="text-danger" th:if="${#fields.hasErrors('email')}"
+                                         th:errors="*{email}"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Cargo</label>
+                                    <br>
+                                    <select  th:field="*{job}" class="col-12" style="display: block;width: 100%;height: calc(1.5em + 0.75rem + 2px);padding: 0.375rem 0.75rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #495057;background-color: #fff; background-clip: padding-box;border: 1px solid #ced4da;border-radius: 0.25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+                                        <option th:each="jobs : ${listaJobs}"
+                                                th:text="|${jobs.getJobtitle()} |"
+                                                th:value="${jobs.getJobid()}"></option>
+                                    </select>
+
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Jefe</label>
+                                    <select  th:field="*{manager}" class="col-12" style="display: block;width: 100%;height: calc(1.5em + 0.75rem + 2px);padding: 0.375rem 0.75rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #495057;background-color: #fff; background-clip: padding-box;border: 1px solid #ced4da;border-radius: 0.25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+                                        <option th:each="manager : ${listaEmployee}"
+                                                th:text="|${manager.getFirstName()} ${manager.getLastName()==null?'':manager.getLastName()}|"
+                                                th:value="${manager.getId()}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Apellido</label>
+                                    <input type="text" class="form-control" th:field="*{lastName}"/>
+                                    <div class="text-danger" th:if="${#fields.hasErrors('lastName')}"
+                                         th:errors="*{lastName}"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control" th:value="${employee.password}" name="password"
+                                           id="password">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('password')}"
+                                         th:errors="*{password}"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Sueldo</label>
+                                    <input type="text" class="form-control" th:field="*{salary}"/>
+                                    <div class="text-danger" th:if="${#fields.hasErrors('salary')}"
+                                         th:errors="*{salary}"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Departamento</label>
+                                    <select th:field="*{department}" class="col-12" style="display: block;width: 100%;height: calc(1.5em + 0.75rem + 2px);padding: 0.375rem 0.75rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #495057;background-color: #fff; background-clip: padding-box;border: 1px solid #ced4da;border-radius: 0.25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+                                        <option th:each="departamento : ${listaDepartments}"
+                                                th:text="|${departamento.getDepartmentname()}|"
+                                                th:value="${departamento.getId()}"></option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Cargo</label>
-                            <select class="form-select" th:field="*{job}">
-                                <option th:each="jobs : ${listaJobs}"
-                                        th:text="|${jobs.getJobtitle()} |"
-                                        th:value="${jobs.getJobid()}"></option>
-                            </select>
+                        <div class="row justify-content-start">
+                            <div class="col-2">
+                                <a th:href="@{'/employee'}" class="btn btn-danger">Cancelar</a>
+                            </div>
+                            <div class="col-2">
+                                <button type="submit" class="btn btn-primary"
+                                        th:text="${employee.id != null ? 'Actualizar' : 'Guardar'}">Registrar
+                                </button>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Sueldo</label>
-                            <input type="text" class="form-control" th:field="*{salary}"/>
-                            <div class="text-danger" th:if="${#fields.hasErrors('salary')}"
-                                 th:errors="*{salary}"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Jefe</label>
-                            <select class="form-select" th:field="*{manager}">
-                                <option th:each="manager : ${listaEmployee}"
-                                        th:text="|${manager.getFirstName()} ${manager.getLastName()==null?'':manager.getLastName()}|"
-                                        th:value="${manager.getId()}"></option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Departamento</label>
-                            <select class="form-select" th:field="*{department}">
-                                <option th:each="departamento : ${listaDepartments}"
-                                        th:text="|${departamento.getDepartmentname()}|"
-                                        th:value="${departamento.getId()}"></option>
-                            </select>
-                        </div>
-                        <a th:href="@{'/employee'}" class="btn btn-danger">Cancelar</a>
-                        <button type="submit" class="btn btn-primary"
-                                th:text="${employee.id != null ? 'Actualizar' : 'Guardar'}">Registrar
-                        </button>
+
+
+
                     </form>
                 </div>
             </div>
         </div>
+
+
+
+
+
     </body>
 </html>
