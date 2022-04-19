@@ -30,7 +30,7 @@ public class EmployeeController {
     @Autowired
     DepartmentsRepository departmentsRepository;
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = {"", "/","/list"})
     public String listaEmployee(Model model) {
         model.addAttribute("listaEmployee", employeesRepository.findAll());
         model.addAttribute("listaJobs", jobsRepository.findAll());
@@ -59,7 +59,7 @@ public class EmployeeController {
             return "employee/Frm";
         } else {
 
-            if (employee.getId() == 0) {
+            if (employee.getId() == null) {
                 attr.addFlashAttribute("msg", "Empleado creado exitosamente");
                 employee.setHireDate(new Date());
                 employeesRepository.save(employee);
@@ -80,15 +80,14 @@ public class EmployeeController {
     }
 
     @GetMapping("/edit")
-    public String editarEmployee(Model model, @RequestParam("id") int id,
-                                 @ModelAttribute("employee") Employees employee) {
+    public String editarEmployee(Model model, @RequestParam("id") int id) {
 
         //COMPLETAR
 
         Optional<Employees> optEmployee = employeesRepository.findById(id);
 
         if (optEmployee.isPresent()) {
-            employee = optEmployee.get();
+            Employees employee = optEmployee.get();
             model.addAttribute("employee", employee);
             model.addAttribute("listaJobs", jobsRepository.findAll());
             model.addAttribute("listaEmployee", employeesRepository.findAll());

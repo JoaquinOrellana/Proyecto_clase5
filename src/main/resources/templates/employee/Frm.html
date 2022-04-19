@@ -11,7 +11,7 @@
         <div class="container">
             <div class="row mb-4">
                 <div class="col-md-6 offset-md-3">
-                    <h2 th:text="|${employee.id == 0 ? 'Nuevo' : 'Editar'} empleado|">Editar/Nuevo empleado</h2>
+                    <h2 th:text="|${employee.id != null ? 'Editar' : 'Nuevo'} empleado|">Nuevo/Editar empleado</h2>
                     <hr/>
                     <form method="post" th:action="@{'/employee/save'}" th:object="${employee}">
                         <input type="hidden" th:field="*{id}">
@@ -71,7 +71,7 @@
                         </div>
                         <a th:href="@{'/employee'}" class="btn btn-danger">Cancelar</a>
                         <button type="submit" class="btn btn-primary"
-                                th:text="${employee.id != 0 ? 'Actualizar' : 'Guardar'}">Registrar
+                                th:text="${employee.id != null ? 'Actualizar' : 'Guardar'}">Registrar
                         </button>
                     </form>
                 </div>
