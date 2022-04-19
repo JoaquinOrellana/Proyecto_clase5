@@ -13,22 +13,22 @@ import java.util.List;
 public interface HistoryRepository extends JpaRepository<History, Integer> {
 
     @Query(value = "select e.first_name as nombre,\n" +
-            "        e.last_name as apellido, date(jh.start_date) as fechainicio,\n" +
-            "        date(jh.end_date) as fechafin, j.job_title as puesto\n, e.salary as salario" +
-            "        from hr.job_history jh\n" +
-            "        inner join hr.employees e\n on e.employee_id = jh.employee_id\n" +
-            "        inner join hr.jobs j\n on j.job_id = e.job_id\n" +
-            "        order by salary desc;", nativeQuery = true)
+            "e.last_name as apellido, date(jh.start_date) as fechainicio,\n" +
+            "date(jh.end_date) as fechafin, j.job_title as puesto, e.salary as salario\n" +
+            "from hr.employees e\n" +
+            "inner join hr.jobs j on j.job_id = e.job_id\n" +
+            "left join hr.job_history jh on e.employee_id = jh.employee_id\n" +
+            "order by salary desc;", nativeQuery = true)
     List<EmpleadoHistoriaDto> obtenerEmpleadosHistoria();
 
     @Query(value = "select e.first_name as nombre,\n" +
-            "        e.last_name as apellido, date(jh.start_date) as fechainicio,\n" +
-            "        date(jh.end_date) as fechafin, j.job_title as puesto\n, e.salary as salario" +
-            "        from hr.job_history jh\n" +
-            "        inner join hr.employees e\n on e.employee_id = jh.employee_id\n" +
-            "        inner join hr.jobs j\n on j.job_id = e.job_id\n" +
-            "        where e.salary = ?1 \n" +
-            "        order by salary desc;", nativeQuery = true)
+            "e.last_name as apellido, date(jh.start_date) as fechainicio,\n" +
+            "date(jh.end_date) as fechafin, j.job_title as puesto, e.salary as salario\n" +
+            "from hr.employees e\n" +
+            "inner join hr.jobs j on j.job_id = e.job_id\n" +
+            "left join hr.job_history jh on e.employee_id = jh.employee_id\n" +
+            "where salary = ?1 \n" +
+            "order by salary desc;", nativeQuery = true)
     List<EmpleadoHistoriaDto> obtenerEmpleadosHistoriaPorSalario(BigDecimal salario);
 
 }

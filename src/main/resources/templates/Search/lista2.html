@@ -50,8 +50,8 @@
                         <td th:text="${e.getNombre()}"></td>
                         <td th:text="${e.getApellido()}"></td>
                         <td th:text="${e.getSalario()}"></td>
-                        <td th:text="${e.getFechainicio()}"></td>
-                        <td th:text="${e.getFechafin()}"></td>
+                        <td th:text="${e.getFechainicio() == null ? '-' : e.getFechainicio()}"></td>
+                        <td th:text="${e.getFechafin() ==  null ? '-' : e.getFechafin()}"></td>
                         <td th:text="${e.getPuesto()}"></td>
                     </tr>
                 </tbody>
